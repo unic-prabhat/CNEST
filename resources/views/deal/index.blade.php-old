@@ -1,0 +1,77 @@
+@extends('layouts.master')
+@section('content')
+
+<div class="page-content-tab">
+
+                <div class="container-fluid">
+                    <!-- Page-Title -->
+                                <div class="row">
+                                    <div class="col-md-12">
+                                    <div class="master">
+                                        
+                                                @if($tasks->count() > 0)
+                                                       
+                                                    @foreach($tasks as $key=>$task)
+                                                    
+                                                        <div class="list mytask">
+                                                            <div class="head">
+                                                                <h3>{{$task->title}}</h3>
+                                                                <span class="badge badge-md badge-soft-danger" style="color:#fff !important;">{{count($task->tasks)}}&nbsp;Lead</span>
+                                                                <span class="badge badge-md badge-soft-success float-right" id="price">
+                                                                    @php ($total = 0) @endphp
+                                                                        @foreach($task->tasks as $price)
+                                                                        @php ($total += $price->amount) @endphp
+                                                                         @endforeach
+                                                                    $&nbsp;{{$total}}
+                                                            </span>
+                                                            </div>
+                                                            <div class="list-item" id="project{{$key + 1}}" status="{{$task->id}}">
+                                                                    
+                                                                    @if($task->tasks->count() > 0)
+                                                                    @foreach($task->tasks as $ta)
+                                                                            <div></div>
+                                                                             <div class="chh" status-id="{{$ta->id}}">
+                                                                                <span class="destroy float-right" data-id="{{$ta->id}}" lead-id={{$ta->lead_id}}><i class="fas fa-window-close"></i></span>
+                                                                                <div class="ch mb-3">
+                                                                                      <h5 class="mb-2" style="font-weight: 600">{{$ta->description}}
+                                                                                            <span class="price float-right">{{$ta->amount}}</span>
+                                                                                      </h5>
+                                                                                
+                                                                                 <div class="child">
+                                                                                <p class="lname">{{$ta->lead->firstname}}</p>
+                                                                                <p class="dt">{{\Carbon\Carbon::parse($ta->lead->created_at)->format('d-m-Y H:i:s')}}</p>
+                                                                                </div>
+
+                                                                                </div>
+                                                                              
+                                                                             </div>
+                                                                    @endforeach
+                                                                    @else
+                                                                    <div class="ch">
+                                                                                
+                                                                             </div>
+                                                                             @endif
+                                                                    
+                                                              </div>
+                                                            </div>
+                                                    @endforeach
+                                                    @else
+                                                    
+                                                    no deals
+                                             @endif
+
+                                        
+                                     
+
+                                    </div>
+                                        
+                                   
+                    </div><!-- /.modal-dialog -->
+                </div>
+                </div>
+                </div>
+
+@endsection
+@section('script')
+
+@endsection
